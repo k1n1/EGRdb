@@ -1,0 +1,38 @@
+{% extends './base.html' %}
+{% block title %}
+Register | egrdb.com
+{% endblock %}
+
+{% block body %}
+  <form action="/account/register/" method="post" class="login-form" onsubmit="return myfun()" name="myform">
+    {% csrf_token %}
+    <h1>Code Varifiction</h1>
+    <h4 id="massage" style='color:red'></h4>
+    {% if otp_error == '' %}
+    {% else %}
+    <h3 style="color:red">{{ error }}</h3>
+    {% endif %}
+    <div class="txtb">
+
+        <input type="text" name="email" id="email" required>
+        <span> </span> </div> <div class="txtb">
+
+        <input type="text" name="name" id="email" required placeholder="username">
+        <span> </span> </div> <div class="txtb">
+
+        <input type="text" name="code" id="code" required placeholder="Code">
+        <span> </span> </div> <div class="txtb">
+
+        <input type="password" name="password" id="password" required placeholder="Password">
+        <span></span>
+    </div>
+
+    <input type="submit" class="logbtn" value="Sign Up">
+  </form>
+       <script>
+         var email = sessionStorage.getItem("egrdb_register_email");
+         document.getElementById("email").value = email;
+         document.getElementById("email").readOnly = true;
+    </script>
+{% endblock %}
+

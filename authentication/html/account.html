@@ -1,0 +1,148 @@
+{% extends "base/base.html" %}
+{% block title %}
+Account | egrdb.com
+{% endblock %}
+{% block body %}
+<script>
+    // remove email form register 
+    sessionStorage.removeItem("egrdb_register_email");
+
+    // after forgot password
+    sessionStorage.removeItem("egrdb_password_reset_email");
+
+</script>
+<script>
+
+
+    var url = sessionStorage.getItem("beforloginurl");
+    sessionStorage.removeItem("beforloginurl");
+    if (url == null) {
+
+    }
+    else {
+        location.replace(url);
+    }
+</script>
+<script>
+    var url = sessionStorage.getItem("loginbeforpostcomments");
+    sessionStorage.removeItem("loginbeforpostcomments");
+    if (url == null) {
+
+    }
+    else {
+        location.replace(url);
+    }
+</script>
+<script>
+    var url = sessionStorage.getItem("loginbeforcontact");
+    sessionStorage.removeItem("loginbeforcontact");
+    if (url == null) {
+
+    }
+    else {
+        location.replace(url);
+    }
+</script>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    #user-wish {
+        color: red;
+    }
+</style>
+<div class=" container">
+    <h3 id="user-wish" class=" text-right mt-3 mb-3 "></h3>
+
+</div>
+
+<script>
+    var today = new Date()
+    var curHr = today.getHours()
+
+    if (curHr < 12) {
+        document.getElementById("user-wish").innerText = "Good morning, {{user.first_name}}";
+    } else if (curHr < 18) {
+        document.getElementById("user-wish").innerText = "Good afternoon, {{user.first_name}}";
+    } else {
+        document.getElementById("user-wish").innerText = "Good evening, {{user.first_name}}";
+    }
+</script>
+
+{% if user.is_authenticated %}
+
+
+        {% if name%}
+
+        {% for i, j in name.items %}
+
+        {% if i == 'mobiles' %}
+        <div style="overflow-x: auto;">
+            <table>
+                <tr>
+                    <th>Mobiles</th>
+                    <th>Display</th>
+                    <th>Design</th>
+                    <th>Camera</th>
+                    <th>Performance</th>
+                    <th>Battery</th>
+                </tr>
+                <tr>
+                    {% for p in j reversed %}
+
+                    {% for a,b in p.items %}
+
+
+
+
+                    {% for c,d in b.items %}
+
+
+
+                    <td>{{d}}</td>
+
+                    {% endfor %}
+                </tr>
+
+
+                {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+
+
+        {% endif %}
+
+
+        {% endfor %}
+        {% else %}
+
+        <center>
+            <h1>Nothing to Show.....</h1>
+            <p>Please go to and reviewd somthing...</p>
+        </center>
+
+
+        {%endif%}
+
+{% else %}
+<center>
+    <h1>Login Required </h1>
+    <a href="/account/login">Login ...</a>
+</center>
+{%endif%}
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends './base.html' %}
+{% block title %}
+Register | egrdb.com
+{% endblock %}
+
+{% block body %}
+
+        <form class="login-form" method="POST" action="/account/register/">
+    {% csrf_token %}
+          <h1>Register</h1>
+    {% if error == '' %}
+    {% else %}
+    <h4 id="massage" style='color:red'>{{error}}</h4>
+    {% endif %}
+
+          <p id="kini"></p>
+        <div class="txtb" id="get_email">
+          <input type="email" name="email" required id="email" placeholder="Email">
+        </div>
+        <input type="submit" class="logbtn" value="Register" id="hide_value" onclick="send_code()">
+
+        <script>
+           function send_code()
+          {
+            var email = document.getElementById("email").value;
+            sessionStorage.setItem("egrdb_register_email", email);
+          }
+        </script>
+
+
+            <div class="bottom-text">
+            <span>Don't have an account?
+                <a href="/account/login">
+                    <h2 style="margin-top:5px;color: blue;">Login</h2>
+                </a></span>
+        </div>
+        <div class="bottom-text">
+            <a href="/account/passwordreset">
+                <h3 style="color: blue; margin-top: -30px">Reset Password<h3>
+            </a>
+        </div>
+
+                </div>
+      <p style="text-align:center; margin-top: 20px;"> ----- OR -----</p>
+    </div>
+        <div>
+
+          <div class="login-with">
+                <a href="">
+                    <ul>
+                        <li><i class="fab fa-google" style="font-size: 25px;"></i></li>
+                        <li>Login with Google</li>
+                    </ul>
+                </a>
+                <a href="">
+                    <ul>
+                        <li><i class="fab fa-facebook" style="font-size: 25px;"></i></li>
+                        <li>Login with facebook</li>
+                    </ul>
+                </a>
+            </div>
+        </div>
+
+      </form>
+
+{% endblock %}
