@@ -1,0 +1,91 @@
+{% extends 'base/base.html' %}
+{% block title %}
+Contact | EGRdb.com
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="Contact Us">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+
+
+{% block body %}
+<style>
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #0000ff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.contact-button{
+    background-color: #0000ff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+a{
+    color: white;
+}
+a:hover{
+    color: white;
+    text-decoration: none;
+}
+</style>
+
+<h3 class="text-center mt-3">Contact Us</h3>
+
+<div class="container">
+    {% if messages%}
+   
+    <h4 style="color: green;" >{{messages}}</h4>
+
+    
+    {%endif%}
+  <form action="/contact/" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="user_id" value="{{user}}" required>
+    <label for="fname">Name</label>
+    <input type="text" id="fname" name="name" placeholder="Your name.." required>
+
+    <label for="subject">Subject</label>
+    <textarea id="subject" name="subject" placeholder="Write something.." required style="height:auto"></textarea>
+    {% if user.is_authenticated %}
+    <input onclick="thankyou()" type="submit" value="Submit" id="submit">
+    {% else %}
+    <button class="contact-button" onclick="loginbeforcontact('{{request.build_absolute_uri}}')"><a href="/account/login/">Submit</a></button>
+    {% endif %}
+  </form>
+</div>
+<script>
+
+function loginbeforcontact(url){
+    sessionStorage.setItem("loginbeforcontact" , url);
+    window.location.href = url
+}
+
+function thankyou(){
+    document.getElementById("thankyou").innerText = "Thank you for you Feedback";
+
+}
+
+</script>
+
+{% endblock %}
+

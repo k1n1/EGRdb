@@ -1,0 +1,200 @@
+{% extends 'base/base.html' %}
+{% block title %}
+{{ news.Title }} | egrdb.com
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ news.Description }}">
+    <meta name="keywords" content="{{news.keyword}}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{{ news.Title }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:image" content="/media/{{ news.image }}" />
+    <meta property="og:description" content="{{ news.Description }}" />
+    <meta property="og:site_name" content="egrdb" />
+{% endblock %}
+
+
+{% block body %}
+
+<style>
+    strong{
+        font-weight: 400;
+    }
+    .bug{
+        color: red;
+        margin-top: 10px;
+    }
+    a:hover{
+        color: red;
+    }
+</style>
+
+<div class="container mt-3" style="font-weight: 300;">
+    <h3>{{news.Title}}</h3>
+    <div class="text-center">
+        <img class="img-fluid" src="/media/{{news.image}}" alt="{{news.Title}}">
+    </div>
+    <div style="margin-top: 50px;">{{news.news_body | safe}}</div>
+</div>
+<div class="container text-right">
+    <a href="/bug-conteck" class="bug" id="bug" onclick="bug('{{ request.build_absolute_uri }}')">Find any Mistack Please contackas</a>
+</div>
+
+
+<br>
+<hr>
+
+<div class="container">
+    <div class="row">
+        {% for i in more %}
+            {% if i.Title != news.Title %}
+            <div class="col-md-3">
+                <div class="card border-light mb-5">
+                    <h3 class="text-centre">{{i.Title}}</h3>
+                    <p>{{i.Description | truncatechars:100}}</p>
+                    <a href="/news/{{i.url}}" class="btn btn-primary">Read More ...</a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>   
+</div>
+
+
+
+<div class="comments_div">
+    <p id="comment_null" style="color: red;"></p>
+    <textarea id="comment" class="comment" onkeyup="textAreaAdjust(this)" style="overflow:hidden" placeholder="Add your comments"></textarea>
+    <br>
+    {% if user.is_authenticated %}
+    <input type="button" class="post" value="Comment" onclick="comment()">
+    {% else %}
+    <a href="/account/login/"><input type="button" class="post" value="Comment" onclick="commnent_login('{{request.build_absolute_uri}}')"></a>
+    {% endif %}
+</div>
+<style>
+.comments_div{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 30px;
+
+}
+
+    .comment{
+        width: 100%;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        resize: none;
+    }
+    .post{
+
+        background-color: gainsboro;
+        color: blue;
+        padding: 0px 30px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: none;
+
+
+    }
+</style>
+<script>
+    function commnent_login(path){
+        var user_comment = document.getElementById("comment").value;
+        sessionStorage.setItem("loginbeforpostcomments", path)
+    }
+    function comment()
+    {
+        var com = document.getElementById("comment").value
+        if (com == ""){
+            document.getElementById("comment_null").innerHTML = "add somthing"
+        }
+        else{
+            document.getElementById("comment").value = ''
+            document.getElementById("comment_null").innerHTML = ''
+            $.ajax({
+                type: 'post',
+                url: '/news/comments',
+                data: {
+                    user: '{{ user.username }}',
+                    display_name : '{{user.first_name}}',
+                    news_id: '{{news.url}}',
+                    comment : com,
+                    csrfmiddlewaretoken: jQuery("[name=csrfmiddlewaretoken]").val()
+                },
+
+            success: function () {
+                document.getElementById("realtime_comments").style.display = "inherit";
+                document.getElementById("current_user").innerText = com;
+
+            }
+        })
+        }
+
+    }
+
+function remove(id){
+    $.ajax({
+    url: '/news/commentsdelete',
+    type: 'post',
+    data : {
+        user : '{{user}}',
+        id : id,
+        news_id: '{{news.url}}',
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    },
+    success: function(result) {
+        document.getElementById(id).remove()
+
+    }
+});
+}
+
+
+
+
+
+
+    function textAreaAdjust(o) {
+        o.style.height = "1px";
+        o.style.height = (25+o.scrollHeight)+"px";
+    }
+
+
+
+</script>
+
+<div class="comment">
+
+    <div class="comments_div" id="realtime_comments" style="display: none;">
+       <p style="font-size:15px;font-family:roboto,Times New Roma"><b>You </b> say's : </p>
+       <p style="font-size: 18px;font-family:roboto,Times New Roma;margin-left: 50px;word-wrap: break-word;white-space: pre-wrap;" id="current_user"> </p>
+       <hr>
+   
+    </div>   
+   
+   {% for i in comments_post reversed %}
+   <div class="comments_div">
+                   <div id="{{i.id}}"> 
+                     {% if i.user == user.username %}                  
+                       <p style="font-size:15px;font-family:roboto,Times New Roma"><b>You </b> say's:</p>
+                       <a href="javascript:void(0);" onclick="remove('{{i.id}}')" style="float: right;">Remove</a>
+                     {% else %}
+                           {% if i.display_name == '' %}
+                           <p style="font-size:15px;font-family:roboto,Times New Roma"><b>{{i.user}}</b> say's : </p>
+                           {% else %}
+                           <p style="font-size:15px;font-family:roboto,Times New Roma"><b>{{i.display_name}}</b> say's : </p>
+                           {% endif %}
+                     {% endif %}
+                     <p style="font-size: 18px;font-family:roboto,Times New Roma;margin-left: 50px;word-wrap: break-word;white-space: pre-wrap;"> {{i.comments}} </p>
+                     <hr>
+                   </div>    
+     </div>
+   {% endfor %}
+   </div>
+
+
+{% endblock %}

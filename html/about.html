@@ -1,0 +1,87 @@
+{% extends 'base/base.html' %}
+{% block title %}
+About | EGRdb.com
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="Contact Us">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+
+
+{% block body %}
+<style>
+    .container{
+        font-weight: 300;
+    }
+    .about{
+        font-weight: 400;
+    }
+    .text{
+        font-weight: 300;
+    }
+    .heading{
+        color: blue;
+    }
+</style>
+
+<div class="container">
+    <h1 class="about text-center mt-5">About <a href="https://egrdb.com">EGRdb.com</a></h1>
+    <h4 class="mt-4 text"> Our main goal is to buy <b>gadgets according to your needs </b> . </h4>
+
+</div>
+
+<div class="container mt-4">
+    <h4>Why Need EGRdb.com</h4>
+    <p> 
+        <b>Problem</b>
+    --> When people go to buy mobiles they don't know which mobiles satisfy their need and they buy any mobiles and then they have problems in future.
+    </p>
+    <p>
+        <b>solution</b>
+    --> <a href="https://egrdb.com">EGRdb.com</a>
+    </p>
+</div>
+
+<div class="container mt-3">
+    <h5 class="heading">Gamer</h5>
+    <div class="container">
+        <h5>Primary Requirement </h5>
+                <li>Performance</li>
+                <li>Battery</li>
+                <li>Display </li>
+        <h5>Secondary Requirement</h5>
+                <li>Design</li>
+                <li>Camera</li>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <h5 class="heading">Social Media Lover</h5>
+    <div class="container">
+        <h5>Primary Requirement </h5>
+                <li>Camera</li>
+                <li>Design &#128515 <small>Mirror selfies </small></li>
+                <li>Display </li>
+                <li>Battery</li>
+        <h5>Secondary Requirement</h5>
+                <li>Performance</li>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <h5 class="heading">Office use</h5>
+    <div class="container">
+        <h5>Primary Requirement </h5>
+                <li>Battery</li>
+                <li>Design </li>
+                <li>Display </li>
+        <h5>Secondary Requirement</h5>
+                <li>Camera</li>
+                <li>Performance</li>
+    </div>
+</div>
+
+{% endblock %}
+

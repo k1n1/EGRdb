@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+{% block title %}
+EGRdb | egrdb.com
+{% endblock %}
+{% block meta %}
+    <meta name="description" content="Welcome to The EGRdb">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+
+{% block body %}
+
+
+<style>
+a{
+    text-decoration: none;
+}
+    a:hover{
+        text-decoration: none;
+    }
+    .font_small{
+        font-weight: normal;
+        font-size: 15px;
+        margin: 2px;
+    }
+    .font_main{
+        font-weight: 400;
+        font-size: 25px;
+        text-decoration: underline;
+    }
+
+</style>
+
+{% for i in search_result %}
+
+
+
+<div class="container mt-3">
+    <a href="/{{i.url}}" class="font_main">{{i.Name}}</a>
+    <p class="font_small">Main Camera | {{i.Camera_Main}} </p>
+    <p class="font_small">Front Camera | {{i.Camera_Selfie}}</p>
+    <p class="font_small">Chipset | {{i.Performance_Chipset}}</p>
+    <p class="font_small">Display | {{i.Display_Screen_size}}</p>
+    <hr>
+</div>
+
+
+
+{% endfor%}
+
+
+
+
+{% endblock %}

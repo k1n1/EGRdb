@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+{% block title %}
+{{ news.Title }} | egrdb.com
+{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ news.Description }}">
+<meta name="keywords" content="{{news.keyword}}">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+<meta property="og:title" content="{{ news.Title }}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:image" content="/media/{{ news.image }}" />
+<meta property="og:description" content="{{ news.Description }}" />
+<meta property="og:site_name" content="egrdb" />
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+    <input type="text" placeholder="Entre somthong">
+    <input type="text" readonly value="user">
+    <button>Sumit</button>
+</div>
+
+
+{% endblock %}
