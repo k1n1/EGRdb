@@ -105,17 +105,17 @@ WSGI_APPLICATION = 'egrdb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
+# Please Enter Database Credentials
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'egrdb',
-        'USER': 'postgres',
-        'PASSWORD': '72777844',
-        'HOST': 'localhost',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
         'PORT': '',
-        # 'ENGINE' : "djongo",
-        # 'NAME' : "egrdb"
-
     }
 
 }
@@ -180,11 +180,14 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_REDIRECT_URL = '/account/'
 
 
-SOCIAL_AUTH_FACEBOOK_KEY = '2355528347841031'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = '5115aada1b58e2bd1a0b49c766db7985'  # App Secret
+# Please Enter Your Social Authentication Credentials
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1071983349679-a6ia9lfn05mip0qu411hqse8dr3phmbt.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'lbjm8lNI3kJS9vanKpn1zCh-'  # App Secret
+
+SOCIAL_AUTH_FACEBOOK_KEY = ''  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = ''  # App Secret
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''  # App Secret
 
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
