@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+{% block title %}
+EGRdb | egrdb.com
+{% endblock %}
+{% block body %}
+{% block meta %}
+    <meta name="description" content="Welcome to The EGRdb">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+<div class="container mt-3">
+    <div class="row">
+        {% for i in all_news %}
+        <div class="col-md-3">
+            <div class="card border-light mb-5">
+                <h3 class="text-centre">{{i.Title | truncatechars:50}}</h3>
+                <div class="text-center">
+                    <img class="" src="/media/{{i.image}}" alt="{{t.Title}}" width="100px">
+                </div>
+                <p>{{i.Description | truncatechars:100}}</p>
+                <a href="/news/{{i.url}}" class="btn btn-primary">Read More ...</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>   
+</div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if all_news.number >= 3 %}
+        <li class="page-item mr-4"><a class="page-link" href="/">1</a></li>
+        {% endif %}
+        {% for num in all_news.paginator.page_range %}
+            {% if all_news.number == num %}
+                <li class="page-item"><a class="page-link" href="?page={{num}}">{{num}}</a></li>
+            {% elif num > all_news.number|add:'-2' and num < all_news.number|add:'2' %}    
+                <li class="page-item"><a class="page-link" href="?page={{num}}">{{num}}</a></li>
+            {% endif %}
+        {% endfor %}    
+    </ul>
+</nav>
+{% endblock %}

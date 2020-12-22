@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+{% block title %}
+Top 5 gaming SmartPhone  | egrdb.com
+{% endblock %}
+{% block meta %}
+    <meta name="description" content="Top 5 Gaming smartphone for GAMERS, Excellent Performance, Excellent Battery Life, Fast Charging, Excellent Display ">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+{% block body %}
+<style>
+    .font_main:hover{
+            text-decoration: none;
+            font-style: italic;
+        }
+        .font_small{
+            font-weight: 300;
+            font-style: normal;
+            font-size: 15px;
+        }
+        .font_main{
+            font-size: 25px;
+            color: blue;
+            text-decoration: underline;
+        }
+</style>
+{% for i in device_list %}
+<div class="container mt-3">
+    <a href="/{{i.Url}}" class="font_main" style="font-weight:600">{{i.Device_name}}</a>
+        <p class="font_small pt-2"><b>OS</b>  | {{i.Performance_Os}} </p>
+        <p class="font_small"><b>Chipset</b> | {{i.Performance_Chipset}}</p>
+        <p class="font_small"><b>GPU</b> | {{i.Performance_GPU}}</p>
+        <p class="font_small"><b>ROM</b> | {{i.Performance_Ram}}</p>
+        <p class="font_small"><b>RAM</b> | {{i.Performance_Rom}}</p>
+        <p class="font_small"><b>Battery Capacity</b> | {{i.Battery_Capacity}}</p>
+        <p class="font_small"><b>Charging Speed</b> | {{i.Battery_Charging_Speed}}</p>
+        <p class="font_small"><b>Screen Size</b> | {{i.Display_Screen_Size}}</p>
+        <p class="font_small"><b>Display Resolution</b> | {{i.Display_Resolution}}</p>
+        <p class="font_small"><b>Display Type</b> | {{i.Display_Type}}</p>
+    <hr>
+</div>
+{% endfor %}
+{% endblock %}
+

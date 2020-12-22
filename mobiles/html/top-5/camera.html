@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% block title %}
+Top 5 Camera SmartPhone  | egrdb.com
+{% endblock %}
+{% block meta %}
+    <meta name="description" content="Top 5 Camera smartphone for PHOTOGRAPHER, Excellent Camera, Best Battery Life, Best Display">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+{% block body %}
+<style>
+    .font_main:hover{
+            text-decoration: none;
+            font-style: italic;
+        }
+        .font_small{
+            font-weight: 300;
+            font-style: normal;
+            font-size: 15px;
+        }
+        .font_main{
+            font-size: 25px;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+{% for i in device_list %}    
+    <div class="container mt-3">
+                <a href="/{{i.Url}}" class="font_main" style="font-weight:600">{{i.Device_name}}</a>
+                <p class="font_small pt-2"><b>Main Camera</b>  | {{i.Camera_Main}} </p>
+                <p class="font_small"><b>Main Camera Video</b> | {{i.Camera_Main_Video}}</p>
+                <p class="font_small"><b>Selfie Camera</b> | {{i.Camera_Selfie}}</p>
+                <p class="font_small"><b>Selfie Camera Video</b> | {{i.Camera_Selfie_Video}}</p>
+                <p class="font_small"><b>More </b> | {{i.Camera_xtra}}</p>
+                <p class="font_small"><b>Battery Capacity</b> | {{i.Battery_Capacity}}</p>
+                <p class="font_small"><b>Charging Speed </b> | {{i.Battery_Charging_Speed}}</p>
+        <hr>
+    </div>
+{% endfor %}    
+{% endblock %}

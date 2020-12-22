@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+{% block title %}
+{{ title }} | egrdb.com
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="All {{ title }} Mobiles, List of {{ title }} Mobiles">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+
+
+{% block body %}
+<style>
+a{
+    text-decoration: none;
+}
+    a:hover{
+        text-decoration: none;
+    }
+    .font_small{
+        font-weight: 300;
+        font-style: normal;
+        font-size: 15px;
+    }
+    .font_main{
+        font-size: 25px;
+        color: blue;
+        text-decoration: underline;
+
+    }
+
+</style>
+{% for i in brand %}
+
+<div class="container mt-3">
+    <a href="/{{i.url}}" class="font_main" style="font-weight:600">{{i.Name}}</a>
+    <p class="font_small">Main Camera | {{i.Camera_Main}} </p>
+    <p class="font_small">Front Camera | {{i.Camera_Selfie}}</p>
+    <p class="font_small">Chipset | {{i.Performance_Chipset}}</p>
+    <p class="font_small">Display | {{i.Display_Screen_Size}}</p>
+    <hr>
+</div>
+
+
+{% endfor %}
+
+
+{% endblock %}

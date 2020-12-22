@@ -1,0 +1,795 @@
+{% extends 'base/base.html' %}
+{% block title %}
+{{ device.Name }} | egrdb.com
+{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ device.Description }}">
+    <meta name="keywords"  content="{{ device.keyword }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@egrdb1">
+    <meta name="twitter:title" content="{{ device.Title }}">
+    <meta name="twitter:description" content="{{ device.Description }}">
+    <meta name="twitter:creator" content="@egrdb1">
+    <meta name="twitter:image" content="/media/{{ device.image }}">
+
+    <meta property="og:title" content="{{ device.Title }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:image" content="/media/{{ device.image }}" />
+    <meta property="og:description" content="{{ device.Description }}" />
+    <meta property="og:site_name" content="egrdb" />
+{#    add latter#}
+    <meta property="fb:admins" content="Facebook numeric ID" />
+{% endblock %}
+
+{% block body %}
+
+<style>
+    #reviews_submit{
+        color: white;
+        background-color: blue;
+    }
+    @media all and (max-width: 767px) {
+        .first_reviews{
+            margin-top: 30px;
+        }
+    }
+    .main-img{
+        width: 300px;
+    }
+
+.stars-outer {
+  position: relative;
+  display: inline-block;
+  font-size: 25px;
+}
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+.stars-outer::before {
+  content: "\f005 \f005 \f005 \f005 \f005 \f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #ccc;
+}
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005 \f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: blue;
+}
+.one-line{
+    margin-bottom: 22px;
+}
+
+
+</style>
+<div class="jumbotron text-center">
+    <h1 style="font-weight:500; font-family: 'Roboto', sans-serif;">{{ device.Name }}</h1>
+</div>
+<div class="container">
+    <div class="row mt-5">
+
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 text-center">
+            <img src="/media/{{ device.image }}" alt="{{ device.Name }}" class="main-img">
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+
+            <div>
+                <table class="table table-hover table-borderless table-responsive table-lg">
+                
+                        <h2 class="first_reviews cat-title">Display</h2>
+                    
+                    <tbody>
+                        <tr>
+                            <td class="info">Screen size (inches) </td>
+                            <td class="spac">{{device.Display_Screen_Size}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Resolution</td>
+                            <td class="spac">{{ device.Display_Resolution }}</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Type</td>
+                            <td class="spac">{{ device.Display_Type }}</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Pixels per inch (PPI) </td>
+                            <td class="spac">{{ device.Display_Pixels_Per_Inch }}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+
+                <div class='text-center'>
+                    {% csrf_token %}
+                    <a href="javascript:void(0);"><i onclick="ret(1, 'display')" id="display-1" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(2, 'display')" id="display-2" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(3, 'display')" id="display-3" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(4, 'display')" id="display-4" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(5, 'display')" id="display-5" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(6, 'display')" id="display-6" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(7, 'display')" id="display-7" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(8, 'display')" id="display-8" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(9, 'display')" id="display-9" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(10, 'display')" id="display-10" class="star">&#9733</i></a>
+                </div>
+                <div style="display: flex;">
+                    Your Reviews : <p id="user_reviews_display" style="margin-left:10px;">{{display}}</p>
+                </div>
+            </div>
+            <div class="mt-5">
+                <table class="table table-hover table-borderless table-responsive table-lg">
+                    
+                        <h2 class="cat-title">Design</h2>
+                    
+                    <tbody>
+                        <tr>
+                            <td class="info">Dimensions (mm)</td>
+                            <td class="spac">{{ device.Design_Dimensions }} </td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Weight (g)</td>
+                            <td class="spac">{{ device.Design_Weight }}</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Colours</td>
+                            <td class="spac">{{ device.Design_Colours }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class='text-center'>
+                    {% csrf_token %}
+                    <a href="javascript:void(0);"><i onclick="ret(1, 'design')" id="design-1" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(2, 'design')" id="design-2" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(3, 'design')" id="design-3" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(4, 'design')" id="design-4" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(5, 'design')" id="design-5" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(6, 'design')" id="design-6" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(7, 'design')" id="design-7" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(8, 'design')" id="design-8" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(9, 'design')" id="design-9" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(10, 'design')" id="design-10" class="star">&#9733</i></a>
+                </div>
+                <div style="display: flex;">
+                    Your Reviews : <p id="user_reviews_design" style="margin-left:10px;">{{design}}</p>
+                </div>
+            </div>
+            <div class="pt-5">
+                <table class="table table-hover table-borderless table-responsive table-lg">
+                    
+                        <h2 class="cat-title">Camera</h2>
+                    
+                    <tbody>
+                        <tr>
+                            <td class="info">Main</td>
+                            <td class="spac">{{ device.Camera_Main }}</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Main Camera Video</td>
+                            <td class="spac">{{ device.Camera_Main_Video }}</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Selfie</td>
+                            <td class="spac">{{ device.Camera_Selfie }}</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Selfie Camera Video</td>
+                            <td class="spac">{{ device.Camera_Selfie_Video }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class='text-center'>
+                    {% csrf_token %}
+                    <a href="javascript:void(0);"><i onclick="ret(1, 'camera')" id="camera-1" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(2, 'camera')" id="camera-2" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(3, 'camera')" id="camera-3" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(4, 'camera')" id="camera-4" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(5, 'camera')" id="camera-5" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(6, 'camera')" id="camera-6" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(7, 'camera')" id="camera-7" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(8, 'camera')" id="camera-8" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(9, 'camera')" id="camera-9" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(10, 'camera')" id="camera-10" class="star">&#9733</i></a>
+                </div>
+                <div style="display: flex;">
+                    Your Reviews : <p id="user_reviews_camera" style="margin-left:10px;">{{camera}}</p>
+                </div>
+            </div>
+            <div class="pt-5">
+                <table class="table table-hover table-borderless table-responsive table-lg">
+                    
+                        <h2 class="cat-title">Performance</h2>
+                        <tbody>
+                            <tr>
+                                <td class="info">OS</td>
+                                <td class="spac">{{ device.Performance_Os }}</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Chipset</td>
+                            <td class="spac">{{ device.Performance_Chipset }}</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">GPU</td>
+                            <td class="spac">{{ device.Performance_GPU }}
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Ram</td>
+                            <td class="spac">{{ device.Performance_Ram }}</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Rom</td>
+                            <td class="spac">{{ device.Performance_Rom }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class='text-center'>
+                    {% csrf_token %}
+                    <a href="javascript:void(0);"><i onclick="ret(1, 'performance')" id="performance-1" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(2, 'performance')" id="performance-2" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(3, 'performance')" id="performance-3" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(4, 'performance')" id="performance-4" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(5, 'performance')" id="performance-5" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(6, 'performance')" id="performance-6" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(7, 'performance')" id="performance-7" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(8, 'performance')" id="performance-8" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(9, 'performance')" id="performance-9" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(10, 'performance')" id="performance-10" class="star">&#9733</i></a>
+                </div>
+                <div style="display: flex;">
+                    Your Reviews : <p id="user_reviews_perfomance" style="margin-left:10px;">{{performance}}</p>
+                </div>
+            </div>
+
+
+            <div class="mt-5">
+                <table class="table table-hover table-borderless table-responsive table-lg">
+                
+                        <h2 class="cat-title">Battery</h2>
+                
+                    <tbody>
+                        <tr>
+                            <td class="info">Capacity</td>
+                            <td class="spac"> {{ device.Battery_Capacity }} </td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="info">Charging</td>
+                            <td class="spac">{{ device.Battery_Charging_Speed }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class='text-center'>
+                    {% csrf_token %}
+                    <a href="javascript:void(0);"><i onclick="ret(1, 'battery')" id="battery-1" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(2, 'battery')" id="battery-2" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(3, 'battery')" id="battery-3" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(4, 'battery')" id="battery-4" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(5, 'battery')" id="battery-5" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(6, 'battery')" id="battery-6" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(7, 'battery')" id="battery-7" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(8, 'battery')" id="battery-8" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(9, 'battery')" id="battery-9" class="star">&#9733</i></a>
+                    <a href="javascript:void(0);"><i onclick="ret(10, 'battery')" id="battery-10" class="star">&#9733</i></a>
+                </div>
+                <div style="display: flex;">
+                    Your Reviews : <p id="user_reviews_battry" style="margin-left:10px;">{{battery}}</p>
+                </div>
+            </div>
+{% if user.is_authenticated %}
+            {% if review == "done" %}
+                <div class="text-center mt-5 mb-5">
+                    <button class="btn btn-default" id="reviews_submit" onclick="reviews_submit()">update</button>
+                    <h3 id="thankyou"></h3>
+                </div>
+            {% else %}
+                <div class="text-center mt-5 mb-5">
+                    <button class="btn btn-default" id="reviews_submit" onclick="reviews_submit()">submit</button>
+                    <h3 id="thankyou"></h3>
+                </div>
+            {% endif %}
+{% else %}
+            <div class="text-center mt-5 mb-5">
+                <a href="/account/login"><button class="btn btn-default" id="reviews_submit" onclick="login('{{request.build_absolute_uri}}')">submit</button></a>
+            </div>
+            <script>
+                sessionStorage.removeItem("beforloginurl")
+                function login(login_path){
+                    sessionStorage.setItem("beforloginurl", login_path);
+
+                }
+            </script>
+{% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- tota by user -->
+
+
+
+
+<div class="container mt-5">
+    <h3 class="mb-4">User Reviews</h3>
+    <h4>{{ total_count}}</h4>
+    <div class="one-line">
+        <div>
+            <h6>Display - </h6>
+            <h6 class="ml-4">{{total_display}}</h6> 
+        </div>
+        <div class="stars-outer ml-4">
+          <div class="stars-inner" id="total_display_user"></div>
+        </div>
+    </div>
+
+    <div class="one-line">
+        <div>
+            <h6>Design - </h6>
+            <h6 class="ml-4">{{total_design}}</h6>
+        </div>
+        
+        <div class="stars-outer ml-4">
+            <div class="stars-inner" id="total_design_user"></div>
+        </div>
+    </div>
+   
+      <div class="one-line">
+          <div>
+            <h6>Camera - </h6>
+            <h6 class="ml-4">{{total_camera}}</h6>
+          </div>
+        
+        <div class="stars-outer ml-4">
+            <div class="stars-inner" id="total_camera_user"></div>
+        </div>
+      </div>
+     
+      <div class="one-line">
+          <div>
+            <h6>Performance - </h6>
+            <h6 class="ml-4">{{total_performance}}</h6>
+          </div>
+        
+        <div class="stars-outer ml-4">
+            <div class="stars-inner" id="total_performance_user"></div>
+        </div>
+      </div>
+      
+      <div class="one-line">
+          <div>
+            <h6>Battery - </h6>
+            <h6 class="ml-4">{{total_battery}}</h6>
+          </div>
+        
+        <div class="stars-outer ml-4">
+            <div class="stars-inner" id="total_battery_user"></div>
+          </div>
+      </div>
+      
+</div>
+<script>
+let total_display_user = '{{total_display}}' * 10;
+let total_design_user = '{{total_design}}'* 10;
+let total_camera_user = '{{total_camera}}' * 10;
+let total_performance_user = '{{total_performance}}' * 10;
+let total_battery_user = '{{total_battery}}' * 10;
+document.getElementById("total_display_user").style.width = total_display_user + '%';
+document.getElementById("total_design_user").style.width = total_design_user + '%';
+document.getElementById("total_camera_user").style.width = total_camera_user + '%';
+document.getElementById("total_performance_user").style.width = total_performance_user + '%';
+document.getElementById("total_battery_user").style.width = total_battery_user + '%';
+</script>
+
+
+
+{% if device.more %}
+    <div class="container more-details">
+
+        {{ device.more | safe }}
+    </div>
+{% else %}
+
+{% endif %}
+
+
+
+<div class="container pt-5">
+    <div class="text-center row">
+        {% for i in more %}
+            <div class=" col-xl-2 col-lg-2 col-md-3 col-sm-6 ">
+                <a href="/{{i.link}}" class="text-primary">
+                    <h5>{{i.Name}}</h5>
+                    <p class=" text-primary text-secondary">{{i.Description | truncatechars:100 }}</p>
+                </a>
+            </div>
+        {% endfor %}
+       
+    </div>
+</div>
+
+
+<div class="comments_div">
+    <p id="comment_null" style="color: red;"></p>
+    <textarea id="comment" class="comment" onkeyup="textAreaAdjust(this)" style="overflow:hidden" placeholder="comment Wite hear"></textarea>
+    <br>
+    {% if user.is_authenticated %}
+    <input type="button" class="post" value="Comment" onclick="comment()">
+    {% else %}
+    <a href="/account/login/"><input type="button" class="post" value="Comment" onclick="commnent_login('{{request.build_absolute_uri}}')"></a>
+    {% endif %}
+</div>
+<style>
+.comments_div{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 30px;
+
+}
+
+    .comment{
+        width: 100%;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        resize: none;
+    }
+    .post{
+
+        background-color: gainsboro;
+        color: blue;
+        padding: 0px 30px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: none;
+
+
+    }
+</style>
+<script>
+    if(sessionStorage.getItem("commentsbefortext")){
+        document.getElementById("comment").innerText= sessionStorage.getItem("commentsbefortext")
+        sessionStorage.removeItem("commentsbefortext")
+        var  com_div = document.getElementById("comment")
+        com_div.style.marginBottom = "50px";
+        com_div.scrollIntoView();
+    }
+
+    function commnent_login(path){
+        var user_comment = document.getElementById("comment").value;
+        sessionStorage.setItem("loginbeforpostcomments", path)
+        sessionStorage.setItem("commentsbefortext", user_comment)
+    }
+    function comment()
+    {
+        var com = document.getElementById("comment").value;
+        if (com == ""){
+            document.getElementById("comment_null").innerHTML = "add somthing";
+        }
+        else{
+            document.getElementById("comment").value = '';
+            document.getElementById("comment_null").innerHTML = '';
+            $.ajax({
+                type: 'post',
+                url: '/comments',
+                data: {
+                    user: '{{ user.username }}',
+                    display_name : '{{user.first_name}}',
+                    mobile_id: '{{device.url}}',
+                    comment : com,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+
+            success: function (data, status, xhttp) {
+                if (data) {
+                    console.log(data, status, xhttp)
+                } else {
+                    alert("no data")
+                }
+                document.getElementById("realtime_comments").style.display = "inherit";
+                document.getElementById("current_user").innerText = com;
+
+            }
+        })
+        }
+
+    }
+
+    function textAreaAdjust(o) {
+        o.style.height = "1px";
+        o.style.height = (25+o.scrollHeight)+"px";
+    }
+
+
+
+</script>
+
+
+
+<div class="comment">
+
+ <div class="comments_div" id="realtime_comments" style="display: none;">
+    <p style="font-size:15px;font-family:roboto,Times New Roma"><b>you </b> say's that : </p>
+    <p style="font-size: 18px;font-family:roboto,Times New Roma;margin-left: 50px;word-wrap: break-word;white-space: pre-wrap;" id="current_user"> </p>
+    <hr>
+
+ </div>   
+
+{% for i in all_comments reversed %}
+<div class="comments_div" >
+                <div id="{{i.id}}"> 
+                  {% if i.user_id == user.username %}                  
+                    <p style="font-size:15px;font-family:roboto,Times New Roma"><b>you </b> say's:</p>
+                    <a href="javascript:void(0);" onclick="remove('{{i.id}}')" style="float: right;">Remove</a>
+                  {% else %}
+                        {% if i.display_name == "" %}
+                        <p style="font-size:15px;font-family:roboto,Times New Roma"><b>{{i.user_id}}</b> say's that : </p>
+                        {% else %}
+                        <p style="font-size:15px;font-family:roboto,Times New Roma"><b>{{i.display_name}}</b> say's that : </p>
+                        {% endif %}
+                  {% endif %}
+                  <p style="font-size: 18px;font-family:roboto,Times New Roma;margin-left: 50px;word-wrap: break-word;white-space: pre-wrap;"> {{i.comments}} </p>
+                  <hr>
+                </div>    
+  </div>
+
+
+{% endfor %}
+</div>
+
+<script>
+
+function remove(id){
+    $.ajax({
+    url: '/commentsdelete',
+    type: 'post',
+    data : {
+        user : '{{user}}',
+        id : id,
+        mobile_id: '{{device.url}}',
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    },
+    success: function(result) {
+        document.getElementById(id).remove();
+
+    }
+});
+}
+
+
+    function openSearch() {
+        document.getElementById("myOverlay").style.display = "block";
+    }
+
+    function closeSearch() {
+        document.getElementById("myOverlay").style.display = "none";
+    }
+
+
+
+    var display='{{display}}' , design="{{design}}", camera="{{camera}}" , performance="{{performance}}" , battery="{{battery}}";
+
+    function ret(star, value) {
+
+        if (value == "display") {
+            for(i=1; i<11; i++){
+                var star_hover = "display-" + i;
+                 document.getElementById(star_hover).style.color = "gray";
+                 document.getElementById(star_hover).style.fontSize = "25px";
+
+            }
+            document.getElementById("user_reviews_display").innerText = star;
+            for(i=1; i<star+1; i++){
+                var star_hover = "display-" + i;
+                 document.getElementById(star_hover).style.color = "blue";
+                 document.getElementById(star_hover).style.fontSize = "28px";
+            }
+            
+            display = star;
+        }
+        if (value == "design") {
+            for(i=1; i<11; i++){
+                var star_hover = "design-" + i;
+                 document.getElementById(star_hover).style.color = "gray";
+                 document.getElementById(star_hover).style.fontSize = "25px";
+
+            }
+            document.getElementById("user_reviews_design").innerText = star;
+            for(i=1; i<star+1; i++){
+                var star_hover = "design-" + i;
+                 document.getElementById(star_hover).style.color = "blue";
+                 document.getElementById(star_hover).style.fontSize = "28px";
+
+            }
+            design = star;
+        }
+        if (value == "camera") {
+            for(i=1; i<11; i++){
+                var star_hover = "camera-" + i;
+                 document.getElementById(star_hover).style.color = "gray";
+                 document.getElementById(star_hover).style.fontSize = "25px";
+
+            }
+            document.getElementById("user_reviews_camera").innerText = star;
+            for(i=1; i<star+1; i++){
+                var star_hover = "camera-" + i;
+                 document.getElementById(star_hover).style.color = "blue";
+                 document.getElementById(star_hover).style.fontSize = "28px";
+
+            }
+            camera = star;
+        }
+        if (value == "performance") {
+            for(i=1; i<11; i++){
+                var star_hover = "performance-" + i;
+                 document.getElementById(star_hover).style.color = "gray";
+                 document.getElementById(star_hover).style.fontSize = "25px";
+
+            }
+            document.getElementById("user_reviews_perfomance").innerText = star;
+            for(i=1; i<star+1; i++){
+                var star_hover = "performance-" + i;
+                 document.getElementById(star_hover).style.color = "blue";
+                 document.getElementById(star_hover).style.fontSize = "28px";
+
+            }
+            performance = star;
+        }
+        if (value == "battery") {
+            for(i=1; i<11; i++){
+                var star_hover = "battery-" + i;
+                 document.getElementById(star_hover).style.color = "gray";
+                 document.getElementById(star_hover).style.fontSize = "25px";
+
+            }
+            document.getElementById("user_reviews_battry").innerText = star;
+            for(i=1; i<star+1; i++){
+                var star_hover = "battery-" + i;
+                document.getElementById(star_hover).style.color = "blue";
+                document.getElementById(star_hover).style.fontSize = "28px";
+
+            }
+            battery = star;
+        }
+    }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var display_user_reviews = '{{display}}';
+    for(var i=1; i<=display_user_reviews; i++){
+        let id = "display-" + i;
+        document.getElementById(id).style.color = "blue";
+        document.getElementById(id).style.fontSize = "28px";
+    }
+    var design_user_reviews = '{{design}}';
+    for(var i=1; i<=design_user_reviews; i++){
+        let id = "design-" + i;
+        document.getElementById(id).style.color = "blue";
+        document.getElementById(id).style.fontSize = "28px";
+    }
+    var camera_user_reviews = '{{camera}}';
+    for(var i=1; i<=camera_user_reviews; i++){
+        let id = "camera-" + i;
+        document.getElementById(id).style.color = "blue";
+        document.getElementById(id).style.fontSize = "28px";
+    }
+    var performance_user_reviews = '{{performance}}';
+    for(var i=1; i<=performance_user_reviews; i++){
+        let id = "performance-" + i;
+        document.getElementById(id).style.color = "blue";
+        document.getElementById(id).style.fontSize = "28px";
+    }
+    var battery_user_reviews = '{{battery}}';
+    for(var i=1; i<=battery_user_reviews; i++){
+        let id = "battery-" + i;
+        document.getElementById(id).style.color = "blue";
+        document.getElementById(id).style.fontSize = "28px";
+    }
+}, false);
+
+
+
+
+
+
+
+    {% if review == 'done' %}
+    function reviews_submit() {
+        document.getElementById('reviews_submit').style.display = 'none';
+
+        $.ajax({
+            type: 'post',
+            url: '/updatereview',
+            data: {
+                user: '{{ user }}',
+                mobile_id: '{{device.url}}',
+                mobile_name : "{{device.Name}}",
+                display: display,
+                design: design,
+                camera: camera,
+                performance: performance,
+                battery: battery,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+
+            success: function () {
+                document.getElementById("thankyou").innerHTML = "Thank you for your Review";
+            }
+        })
+
+
+    }
+    {% else %}
+    function reviews_submit() {
+        if (!display || !design || !camera || !performance || !battery){
+            alert("please fil")
+        }
+        else{
+            document.getElementById('reviews_submit').style.display = 'none';
+            $.ajax({
+            type: 'post',
+            url: '/newreview',
+            data: {
+                user: '{{ user }}',
+                mobile_id: "{{device.url}}",
+                mobile_name : "{{device.Name}}",
+                display: display,
+                design: design,
+                camera: camera,
+                performance: performance,
+                battery: battery,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+
+            success: function () {
+                document.getElementById("thankyou").innerHTML = "Thank you for your Review";
+            }
+        })
+        }
+
+
+
+    }
+    {% endif %}
+
+
+
+</script>
+
+
+{% endblock %}
